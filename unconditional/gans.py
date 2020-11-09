@@ -65,11 +65,9 @@ class GAN:
                     # Optimize D
                     loss_D = self.objective_function.optimize_D(real_data, fake_data, self.net_D, self.net_G, self.optim_D).numpy()
                     
-                    # Record the loss
-                    self.losses_D.append(loss_D)
+                # Record D loss
+                self.losses_D.append(loss_D)
 
-                    # --> DEBUG
-                    self.DEBUG_optim_D_time.append(time() - start_iter_time)
                 # --> DEBUG
                 self.DEBUG_optim_D_time.append(time() - start_iter_time)
 
@@ -80,11 +78,9 @@ class GAN:
                     # Optimize G
                     loss_G = self.objective_function.optimize_G(sample_noise, self.net_D, self.net_G, self.optim_G).numpy()
 
-                    # Record the loss
-                    self.losses_G.append(loss_G)
+                # Record G loss
+                self.losses_G.append(loss_G)
 
-                    # --> DEBUG
-                    self.DEBUG_optim_G_time.append(time() - start_iter_time)
                 # --> DEBUG
                 self.DEBUG_optim_G_time.append(time() - start_iter_time)
                 
