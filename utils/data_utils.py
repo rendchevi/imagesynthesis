@@ -32,12 +32,13 @@ def deprocess_images(images):
 
     return images
 
-def fetch_dataset(data_path, batch_size, image_size, color_mode):
+def fetch_dataset(data_path, batch_size, image_size, color_mode, resize_method):
     # Generate train dataset
     train_datagen = tf.keras.preprocessing.image_dataset_from_directory(data_path,
                                                                         image_size = image_size,
                                                                         batch_size = batch_size,
-                                                                        color_mode = color_mode)
+                                                                        color_mode = color_mode,
+                                                                        interpolation = resize_method)
 
     # Normalize training dataset
     norm_layer = tf.keras.layers.experimental.preprocessing.Rescaling(1./127.5, offset = -1)

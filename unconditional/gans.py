@@ -35,7 +35,7 @@ class GAN:
     def set_train_files(self, train_files_path):
         self.train_files_path = np.array(glob(train_files_path))
 
-    def fetch_train_data(self, train_files_path, batch_size = 16):
+    def fetch_train_data(self, train_files_path, batch_size = 16, image_size = None, resize_method = 'bilinear'):
         if self.net_G.output_shape[-1] == 1:
             color_mode = 'grayscale'
         elif self.net_G.output_shape[-1] == 3:
@@ -43,7 +43,10 @@ class GAN:
         elif self.net_G.output_shape[-1] == 4:    
             color_mode = 'rgba'
 
-        self.train_dataset = fetch_dataset(train_files_path, batch_size, self.net_G.output_shape[1:3], color_mode)
+        if image_size == None:
+            image_size = self.net_G.output_shape[1:3]
+
+        self.train_dataset = fetch_dataset(train_files_path, batch_size, image_size, color_mode, resize_method)
         
     def fit(self, epochs, batch_size = 16, num_train_D = 1, num_train_G = 1):
 
